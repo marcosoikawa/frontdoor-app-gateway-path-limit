@@ -129,6 +129,12 @@ az afd profile create --profile-name pathlimit --resource-group fd-appg-pahtlimi
 
 az afd endpoint create --resource-group fd-appg-pahtlimit --endpoint-name pathlimit --profile-name pathlimit --enabled-state Enabled
 
+# Segment A Origin Group
+az afd origin-group create --resource-group fd-appg-pahtlimit --origin-group-name SegmentA-og --profile-name pathlimit --probe-request-type GET --probe-protocol Http --probe-interval-in-seconds 60 --probe-path / --sample-size 4 --successful-samples-required 3 --additional-latency-in-milliseconds 50
 
-az afd origin-group create --resource-group fd-appg-pahtlimit --origin-group-name og --profile-name pathlimit --probe-request-type GET --probe-protocol Http --probe-interval-in-seconds 60 --probe-path / --sample-size 4 --successful-samples-required 3 --additional-latency-in-milliseconds 50
+# Segment B Origin Group
+az afd origin-group create --resource-group fd-appg-pahtlimit --origin-group-name SegmentB-og --profile-name pathlimit --probe-request-type GET --probe-protocol Http --probe-interval-in-seconds 60 --probe-path / --sample-size 4 --successful-samples-required 3 --additional-latency-in-milliseconds 50
+
+## via Portal
+
 ```
