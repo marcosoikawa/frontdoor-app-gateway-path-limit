@@ -18,20 +18,58 @@ az group create \
     --location brazilsouth
 ```
 
-Create Cluster 01
+#### Create Cluster 01
 
 ```bash
 # Create AKS 01
 az aks create --resource-group fd-appg-pahtlimit --name aks01 --enable-app-routing --enable-managed-identity --node-count 1 --generate-ssh-keys
 
+#credentials
+az aks get-credentials -n aks01 -g fd-appg-pahtlimit
+
+#namespace
+kubectl create namespace aks-app
+
+#Deployment
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/aks01.yaml -n aks-app
+
+#service
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/service.yaml -n aks-app
+
+#ingress
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/ingress01.yaml -n aks-app
+
+#verify
+kubectl get ingress -n aks-app
+
 ```
-Create Cluster 02
+#### Create Cluster 02
 
 ```bash
-# Create AKS 01
+# Create AKS 02
 az aks create --resource-group fd-appg-pahtlimit --name aks02 --enable-app-routing --enable-managed-identity --node-count 1 --generate-ssh-keys
 
+#credentials
+az aks get-credentials -n aks02 -g fd-appg-pahtlimit
+
+#namespace
+kubectl create namespace aks-app
+
+#Deployment
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/aks02.yaml -n aks-app
+
+#service
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/service.yaml -n aks-app
+
+#ingress
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/ingress02.yaml -n aks-app
+
+#verify
+kubectl get ingress -n aks-app
+
 ```
+
+
 
 Deploy App to test
 
