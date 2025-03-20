@@ -17,3 +17,41 @@ az group create \
     --name fd-appg-pahtlimit \
     --location brazilsouth
 ```
+
+Create Cluster 01
+
+```bash
+# Create AKS 01
+az aks create --resource-group fd-appg-pahtlimit --name aks01 --enable-app-routing --enable-managed-identity --node-count 1 --generate-ssh-keys
+
+```
+Create Cluster 02
+
+```bash
+# Create AKS 01
+az aks create --resource-group fd-appg-pahtlimit --name aks02 --enable-app-routing --enable-managed-identity --node-count 1 --generate-ssh-keys
+
+```
+
+Deploy App to test
+
+```bash
+#Cluster 01
+
+#credentials
+az aks get-credentials -n aks01 -g fd-appg-pahtlimit
+
+#namespace
+kubectl create namespace app1
+
+#Deployment
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/Labs/main/aks-multicluster-kubnet/deployment01.yaml -n hello-web-app-routing
+
+#service
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/Labs/main/aks-multicluster-kubnet/service.yaml -n hello-web-app-routing
+
+#ingress
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/Labs/main/aks-multicluster-kubnet/ingress.yaml -n hello-web-app-routing
+
+#verify
+kubectl get ingress -n hello-web-app-routing
