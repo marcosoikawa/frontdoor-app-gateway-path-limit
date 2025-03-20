@@ -69,27 +69,30 @@ kubectl get ingress -n aks-app
 
 ```
 
-
-
-Deploy App to test
+#### Create Application Gateway
 
 ```bash
-#Cluster 01
 
-#credentials
+#create vnet
+az network vnet create --name pathlimit-vnet --resource-group fd-appg-pahtlimit --location brazilsouth --address-prefix 10.22.0.0/16 --subnet-name appgtwsubnet --subnet-prefix 10.22.0.0/24
+
+#create public ip
+az network public-ip create --resource-group fd-appg-pahtlimit --name pathlimit-pip --allocation-method Static --sku Standard
+
+#create Application Gateway
+az network application-gateway create --name pathlimit-appgtw --location brazilsouth --resource-group fd-appg-pahtlimit --capacity 2 --sku Standard_v2 --public-ip-address pathlimit-pip --vnet-name pathlimit-vnet --subnet appgtwsubnet --priority 100
+
+```
+```bash
+
+#get AKSs Ingress IPs
+
+#AKS01
 az aks get-credentials -n aks01 -g fd-appg-pahtlimit
+kubectl get ingress
 
-#namespace
-kubectl create namespace aks-app
+#AKS01
+az aks get-credentials -n aks02 -g fd-appg-pahtlimit
+kubectl get ingress
 
-#Deployment
-kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/aks01.yaml -n aks-app
-
-#service
-kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/service.yaml -n aks-app
-
-#ingress
-kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/ingress.yaml -n aks-app
-
-#verify
-kubectl get ingress -n aks-app
+```
