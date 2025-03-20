@@ -9,7 +9,7 @@ spec:
   - host: aks.oikawa.dev.br
     http:
       paths:
-      - path: /
+      - path: /app01
         pathType: Prefix
       - backend:
           service:
