@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com
   rules:
-  - host: aks.oikawa.dev.br
+  - host: "aks.oikawa.dev.br"
     http:
       paths:
       - backend:
@@ -14,5 +14,5 @@ spec:
             name: aks-helloworld
             port:
               number: 80
-        path: /app01
+        path: "/app01"
         pathType: Prefix
