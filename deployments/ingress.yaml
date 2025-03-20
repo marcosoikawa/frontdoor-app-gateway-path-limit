@@ -6,7 +6,6 @@ metadata:
 spec:
   ingressClassName: webapprouting.kubernetes.azure.com
   rules:
-  - host: kubenet.oikawa.net.br
     http:
       paths:
       - backend:
