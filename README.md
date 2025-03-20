@@ -42,23 +42,16 @@ Deploy App to test
 az aks get-credentials -n aks01 -g fd-appg-pahtlimit
 
 #namespace
-kubectl create namespace app01
+kubectl create namespace aks-app
 
 #Deployment
-kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/aks01.yaml -n app01
-
-
-
-
-
-
-
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/aks01.yaml -n aks-app
 
 #service
-kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/Labs/main/aks-multicluster-kubnet/service.yaml -n hello-web-app-routing
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/service.yaml -n aks-app
 
 #ingress
-kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/Labs/main/aks-multicluster-kubnet/ingress.yaml -n hello-web-app-routing
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/Labs/main/aks-multicluster-kubnet/ingress.yaml -n aks-app
 
 #verify
-kubectl get ingress -n hello-web-app-routing
+kubectl get ingress -n aks-app

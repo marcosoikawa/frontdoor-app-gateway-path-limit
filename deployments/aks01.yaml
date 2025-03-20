@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: aks-helloworld  
-  namespace: app01
+  namespace: aks-app
 spec:
   replicas: 1
   selector:
