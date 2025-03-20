@@ -14,12 +14,12 @@ spec:
             name: aks-helloworld
             port:
               number: 80
-        path: /app01
+        path: /app01(/|$)(.*)
         pathType: Prefix
       - backend:
           service:
             name: aks-helloworld
             port:
               number: 80
-        path: /
+        path: /(.*)
         pathType: Prefix
