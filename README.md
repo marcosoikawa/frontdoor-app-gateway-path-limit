@@ -8,7 +8,7 @@ This sample objective to handle the path limit of 200 origins of Front Door and 
 
 ---
 
-## Configure networking
+## Configure Resource Group
 
 Set up the virtual networking for the environment
 
@@ -75,6 +75,9 @@ kubectl get ingress -n aks-app
 
 #create vnet
 az network vnet create --name pathlimit-vnet --resource-group fd-appg-pahtlimit --location brazilsouth --address-prefix 10.22.0.0/16 --subnet-name appgtwsubnet --subnet-prefix 10.22.0.0/24
+
+#create nsg with app gateway rules
+####
 
 #create public ip Gateway Segment A
 az network public-ip create --resource-group fd-appg-pahtlimit --name appgtw-a-pip --allocation-method Static --sku Standard
