@@ -51,7 +51,7 @@ kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-ga
 kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/service.yaml -n aks-app
 
 #ingress
-kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/Labs/main/aks-multicluster-kubnet/ingress.yaml -n aks-app
+kubectl apply -f https://raw.githubusercontent.com/marcosoikawa/frontdoor-app-gateway-path-limit/refs/heads/main/deployments/ingress.yaml -n aks-app
 
 #verify
 kubectl get ingress -n aks-app
