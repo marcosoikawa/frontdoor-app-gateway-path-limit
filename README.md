@@ -69,30 +69,66 @@ kubectl get ingress -n aks-app
 
 ```
 
-#### Create Application Gateway
+#### Create Application Gateways
 
 ```bash
 
 #create vnet
 az network vnet create --name pathlimit-vnet --resource-group fd-appg-pahtlimit --location brazilsouth --address-prefix 10.22.0.0/16 --subnet-name appgtwsubnet --subnet-prefix 10.22.0.0/24
 
-#create public ip
-az network public-ip create --resource-group fd-appg-pahtlimit --name pathlimit-pip --allocation-method Static --sku Standard
+#create public ip Gateway Segment A
+az network public-ip create --resource-group fd-appg-pahtlimit --name appgtw-a-pip --allocation-method Static --sku Standard
 
-#create Application Gateway
-az network application-gateway create --name pathlimit-appgtw --location brazilsouth --resource-group fd-appg-pahtlimit --capacity 2 --sku Standard_v2 --public-ip-address pathlimit-pip --vnet-name pathlimit-vnet --subnet appgtwsubnet --priority 100
+#create public ip Gateway Segment B
+az network public-ip create --resource-group fd-appg-pahtlimit --name appgtw-b-pip --allocation-method Static --sku Standard
+
+#create Application Gateway Segment A
+az network application-gateway create --name appgtw-A --location brazilsouth --resource-group fd-appg-pahtlimit --capacity 2 --sku Standard_v2 --public-ip-address appgtw-a-pip --vnet-name pathlimit-vnet --subnet appgtwsubnet --priority 100
+
+#create Application Gateway Segment B
+az network application-gateway create --name appgtw-B --location brazilsouth --resource-group fd-appg-pahtlimit --capacity 2 --sku Standard_v2 --public-ip-address appgtw-b-pip --vnet-name pathlimit-vnet --subnet appgtwsubnet --priority 100
+
 
 ```
+
+#### Creating backend pools for Application Gateways
 ```bash
 
-#get AKSs Ingress IPs
+
 
 #AKS01
 az aks get-credentials -n aks01 -g fd-appg-pahtlimit
-kubectl get ingress
 
-#AKS01
+ADDRESS=$(kubectl get ingress -n aks-app -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
+
+az network application-gateway address-pool create -g fd-appg-pahtlimit --gateway-name appgtw-A -n App01 --servers $ADDRESS
+
+
+#AKS02
 az aks get-credentials -n aks02 -g fd-appg-pahtlimit
-kubectl get ingress
 
+ADDRESS=$(kubectl get ingress -n aks-app -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
+
+az network application-gateway address-pool create -g fd-appg-pahtlimit --gateway-name appgtw-A -n App02 --servers $ADDRESS
+
+
+
+
+#create health probe Application Gateway Segment A
+az network application-gateway probe create -g fd-appg-pahtlimit --gateway-name appgtw-A -n urlProbe --protocol http --host aks.oikawa.dev.br --path "/"
+
+
+#create health probe Application Gateway Segment B
+az network application-gateway probe create -g fd-appg-pahtlimit --gateway-name appgtw-A -n urlProbe --protocol http --host aks.oikawa.dev.br --path "/"
+
+```
+
+#### Creating Front Door
+```bash
+az afd profile create --profile-name pathlimit --resource-group fd-appg-pahtlimit --sku Standard_AzureFrontDoor
+
+az afd endpoint create --resource-group fd-appg-pahtlimit --endpoint-name pathlimit --profile-name pathlimit --enabled-state Enabled
+
+
+az afd origin-group create --resource-group fd-appg-pahtlimit --origin-group-name og --profile-name pathlimit --probe-request-type GET --probe-protocol Http --probe-interval-in-seconds 60 --probe-path / --sample-size 4 --successful-samples-required 3 --additional-latency-in-milliseconds 50
 ```
