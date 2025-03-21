@@ -1,3 +1,10 @@
+---
+ArtifactType: sample
+Language: CLi
+Description: This sample describes how to handle the limit of 100 paths of Application Gateway and 200 paths of Azure Front Door. 
+Tags: Azure, Application Gateway, Azure Front Door
+---
+
 # Bypass limit of paths of Front Door / Application Gateway
 This lab intends to help to handle the limit of routing paths of 200 origins of Front Door and / or 100 backends of Application Gateway, for very large deployments / migrations where all applications is under a unique URL and distributed by paths.
 
@@ -170,6 +177,20 @@ az afd origin-group create --resource-group fd-appg-pahtlimit --origin-group-nam
 [Azure Front Door documentation](https://learn.microsoft.com/en-us/azure/frontdoor/)
 
 [Application Gateway documentation](https://learn.microsoft.com/en-us/azure/application-gateway/overview)
+
+
+## Contributors
+
+*This article will be maintained by Microsoft. It was originally written by the following contributors.*
+
+Principal authors:
+
+- [Marcos Hirohsi Oikawa](https://www.linkedin.com/in/marcos-hiroshi-oikawa) | Technical Specialist
+- [Leandro Oliveira](https://www.linkedin.com/in/so-leandro/) | Technical Specialist
+- [Augusto Wagner de Araujo](https://www.linkedin.com/in/augustowagner/) | Cloud Solution Architect
+- [Igor de Aguiar](https://www.linkedin.com/in/igor-de-aguiar/) | Cloud Solution Architect
+
+*To see non-public LinkedIn profiles, sign in to LinkedIn.*
 
 ## Contributing
 
