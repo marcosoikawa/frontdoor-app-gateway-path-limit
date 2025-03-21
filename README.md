@@ -1,6 +1,13 @@
 # Bypass limit of path of Front Door / Application Gateway
 This sample objective to handle the path limit of 200 origins of Front Door and / or 100 backends of Application Gateway, for very large deployments / migrations that all applications is under a unique URL and distributed by paths
 
+## Context
+In large customers, sometimes applications is distribuited under subdomains, and sometimes, under a unique subdomain they have more than 200 applications under different paths.
+![Environment](./media/1.1.png)
+
+you can use [Application Gateway path-based routing](https://learn.microsoft.com/en-us/azure/application-gateway/create-url-route-portal) to route request based on paths to different backend pools, but it have a [limit of 100 backend pools](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits#azure-application-gateway-limits) in a single instance.
+
+
 ## Architecture diagram
 
 ## Prerequisites
