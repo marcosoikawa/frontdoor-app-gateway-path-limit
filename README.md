@@ -5,7 +5,7 @@ Description: This sample describes how to handle the limit of 100 paths of Appli
 Tags: Azure, Application Gateway, Azure Front Door
 ---
 
-# Bypass limit of paths of Front Door / Application Gateway
+# Bypass limit of route paths of Front Door / Application Gateway
 
 ![GitHub](https://img.shields.io/github/license/marcosoikawa/frontdoor-app-gateway-path-limit) 
 ![GitHub repo size](https://img.shields.io/github/repo-size/marcosoikawa/frontdoor-app-gateway-path-limit) 
