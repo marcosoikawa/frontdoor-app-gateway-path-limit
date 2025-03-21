@@ -6,6 +6,13 @@ Tags: Azure, Application Gateway, Azure Front Door
 ---
 
 # Bypass limit of paths of Front Door / Application Gateway
+
+![GitHub](https://img.shields.io/github/license/marcosoikawa/frontdoor-app-gateway-path-limit) 
+![GitHub repo size](https://img.shields.io/github/repo-size/marcosoikawa/frontdoor-app-gateway-path-limit) 
+[![Azure](https://badgen.net/badge/icon/azure?icon=azure&label)](https://azure.microsoft.com)
+
+![GitHub last commit](https://img.shields.io/github/last-commit/marcosoikawa/frontdoor-app-gateway-path-limit)
+
 This lab intends to help to handle the limit of routing paths of 200 origins of Front Door and / or 100 backends of Application Gateway, for very large deployments / migrations where all applications is under a unique URL and distributed by paths.
 
 ## Context
